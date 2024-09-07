@@ -61,9 +61,9 @@
   },
   "scripts": {
     "build": "vite build",
-    "backend:up": "PROJECT_NAME=todo-app pnpm -C ../../ run example-backend:up && pnpm db:migrate",
-    "backend:down": "PROJECT_NAME=todo-app pnpm -C ../../ run example-backend:down",
-    "db:migrate": "dotenv -e ../../.env.dev -- pnpm exec pg-migrations apply --directory ./db/migrations",
+    "backend:up": "dotenv -e .env.dev -- docker compose up -d && pnpm db:migrate",
+    "backend:down": "dotenv -e .env.dev -- docker compose down --volumes",
+    "db:migrate": "dotenv -e .env.dev -- pnpm exec pg-migrations apply --directory ./migrations",
     "dev": "concurrently \"vite\" \"node server.js\"",
     "typecheck": "tsc --noEmit"
   }

@@ -1,13 +1,13 @@
+import { useShape } from "@electric-sql/react"
 import {
+  Checkbox,
   Container,
   Flex,
-  Checkbox,
   Heading,
+  Link,
   Text,
   TextField,
-  Link,
 } from "@radix-ui/themes"
-import { useShape } from "@electric-sql/react"
 import { v4 as uuidv4 } from "uuid"
 
 type ToDo = {
@@ -18,11 +18,17 @@ type ToDo = {
 }
 
 export default function Index() {
-  const { data: todos } = useShape({
+  const { isUpToDate, data: todos } = useShape<ToDo>({
     url: `http://localhost:3000/v1/shape/todos`,
-  }) as unknown as { data: ToDo[] }
+  })
+
   todos.sort((a, b) => a.created_at - b.created_at)
-  console.log({ todos })
+  console.log(`TODOs:`, { todos })
+
+  if (!isUpToDate) {
+    return <div>loading</div>
+  }
+
   return (
     <Container size="1">
       <Flex gap="5" mt="5" direction="column">

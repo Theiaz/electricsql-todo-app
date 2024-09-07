@@ -6,20 +6,12 @@ import { z } from "zod"
 
 const { Client } = pg
 
-// const client = new Client({
-//   host: `localhost`,
-//   port: 54321,
-//   password: `password`,
-//   user: `postgres`,
-//   database: `electric`,
-// })
-
 const client = new Client({
-  host: `aws-0-eu-central-1.pooler.supabase.com`,
-  port: 6543,
-  password: `TfskVeOSU1GKX3X9`,
-  user: `postgres.fqczbkqgzadvepvzwxol`,
-  database: `postgres`,
+  host: `localhost`,
+  port: 54321,
+  password: `password`,
+  user: `postgres`,
+  database: `electric`,
 })
 
 client.connect()
