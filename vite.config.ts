@@ -1,8 +1,8 @@
-import { defineConfig } from "vite"
-import react from "@vitejs/plugin-react-swc"
-import { capsizeRadixPlugin } from "vite-plugin-capsize-radix"
 import alegreyaSans from "@capsizecss/metrics/alegreyaSans"
 import arial from "@capsizecss/metrics/arial"
+import react from "@vitejs/plugin-react-swc"
+import { defineConfig } from "vite"
+import { capsizeRadixPlugin } from "vite-plugin-capsize-radix"
 
 export default defineConfig({
   plugins: [
@@ -15,4 +15,7 @@ export default defineConfig({
       defaultFontStack: [alegreyaSans as any, arial as any],
     }),
   ],
+  optimizeDeps: {
+    exclude: [`@electric-sql/pglite`],
+  },
 })

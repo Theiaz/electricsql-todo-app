@@ -1,3 +1,4 @@
+import { usePGlite } from "@electric-sql/pglite-react"
 import { useShape } from "@electric-sql/react"
 import {
   Checkbox,
@@ -24,6 +25,24 @@ export default function Index() {
 
   todos.sort((a, b) => a.created_at - b.created_at)
   console.log(`TODOs:`, { todos })
+
+  // database stuff
+  const db = usePGlite()
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS todos (
+      id SERIAL PRIMARY KEY,
+      title TEXT NOT NULL,
+      completed BOOLEAN NOT NULL,
+      created_at TIMESTAMP WITH TIME ZONE NOT NULL
+    );
+    `)
+
+  const insertItem = () => {
+    db.query(
+      `INSERT INTO todos (id, title, completed, created_at) VALUES($1, $2, false, $3)`,
+      [1, `Todo title`, new Date()]
+    )
+  }
 
   if (!isUpToDate) {
     return <div>loading</div>
@@ -94,6 +113,7 @@ export default function Index() {
         >
           <TextField.Root type="text" name="todo" placeholder="New Todo" />
         </form>
+        <button onClick={insertItem}>Insert to DB</button>
       </Flex>
     </Container>
   )
